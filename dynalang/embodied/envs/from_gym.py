@@ -51,24 +51,34 @@ class FromGym(embodied.Env):
 
   def step(self, action):
     if action['reset'] or self._done:
-      self._done = False
-      obs = self._env.reset()
-      return self._obs(obs, 0.0, is_first=True)
+        self._done = False
+        obs = self._env.reset()
+        return self._obs(obs, 0.0, is_first=True)
+    
     if self._act_dict:
-      action = self._unflatten(action)
+        action = self._unflatten(action)
     else:
-      action = action[self._act_key]
-    obs, reward, self._done, self._info = self._env.step(action)
+        action = action[self._act_key]
+    
+    # 修正: Gym 環境から 5 つの戻り値を取得し、`done` を作成
+    obs, reward, terminated, truncated, info = self._env.step(action)
+    self._done = terminated or truncated  # 終了条件を統一
+    
+    # 元の処理に戻る
     return self._obs(
         obs, reward,
         is_last=bool(self._done),
-        is_terminal=bool(self._info.get('is_terminal', self._done)))
+        is_terminal=bool(info.get('is_terminal', self._done))
+    )
+
 
   def _obs(
       self, obs, reward, is_first=False, is_last=False, is_terminal=False):
     if not self._obs_dict:
       obs = {self._obs_key: obs}
     obs = self._flatten(obs)
+    if isinstance(obs['image'], tuple):
+      obs['image'], additional_info = obs['image']  # 修正: タプルを分解
     obs = {k: np.asarray(v) for k, v in obs.items()}
     obs.update(
         reward=np.float32(reward),

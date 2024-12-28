@@ -109,46 +109,184 @@ defaults:
   batch_length: 64
   data_loaders: 8
 
+  # # World Model
+  # grad_heads: [decoder, reward, cont]
+  # rssm_type: rssm
+  # rssm: {impl: softmax, deter: 4096, units: 1024, stoch: 32, classes: 32, act: silu, norm: layer, unimix: 0.01, unroll: False, action_clip: 1.0, bottleneck: -1, winit: normal, fan: avg, maskgit: {embed: 256, layers: 4, heads: 4, ffwdim: 256, steps: 4}}
+  # early_rssm: {deter: 4096, units: 1024, stoch: 32, classes: 32, act: silu, norm: layer, unimix: 0.01, unroll: False, action_clip: 1.0, bottleneck: -1, winit: normal, fan: avg, prior_layers: 3}
+  # token_rssm: {deter: 4096, units: 1024, stoch: 32, classes: 32, vocab: 32100, act: silu, norm: layer, unimix: 0.01, unroll: False, action_clip: 1.0, bottleneck: -1, winit: normal, fan: avg, prior_layers: 3}
+  # encoder: {mlp_keys: '.*', cnn_keys: '.*', act: silu, norm: layer, mlp_layers: 5, mlp_units: 1024, cnn: resnet, cnn_depth: 96, cnn_blocks: 0, resize: stride, winit: normal, fan: avg}
+  # decoder: {mlp_keys: '.*', cnn_keys: '.*', act: silu, norm: layer, mlp_layers: 5, mlp_units: 1024, cnn: resnet, cnn_depth: 96, cnn_blocks: 0, image_dist: mse, vector_dist: symlog_mse, inputs: [deter, stoch], resize: stride, winit: normal, fan: avg, outscale: 1.0, minres: 4, cnn_sigmoid: False}
+  # reward_head: {layers: 5, units: 1024, act: silu, norm: layer, dist: symexp_twohot, outscale: 0.0, outnorm: False, inputs: [deter, stoch], winit: normal, fan: avg, bins: 255}
+  # cont_head: {layers: 5, units: 1024, act: silu, norm: layer, dist: binary, outscale: 1.0, outnorm: False, inputs: [deter, stoch], winit: normal, fan: avg}
+  # loss_scales: {image: 1.0, vector: 1.0, reward: 1.0, cont: 1.0, dyn: 0.5, rep: 0.1, actor: 1.0, critic: 1.0, slowreg: 1.0, token: 1.0, lm: 0.0}
+  # rssm_loss: {free: 1.0}
+  # model_opt: {opt: adam, lr: 1e-4, eps: 1e-8, clip: 1000.0, wd: 0.0, warmup: 0, lateclip: 0.0, frozen_keys: '^$'}
+  # skip_cnn_training: False
+  # skip_mlp_training: False
+  # zero_data_keys: ['']
+  # zero_cnn: False
+  # zero_mlp: False
+
+  # # Actor Critic
+  # actor: {layers: 5, units: 1024, act: silu, norm: layer, minstd: 0.1, maxstd: 1.0, outscale: 1.0, outnorm: False, unimix: 0.01, inputs: [deter, stoch], winit: normal, fan: avg, symlog_inputs: False}
+  # critic: {layers: 5, units: 1024, act: silu, norm: layer, dist: symexp_twohot, outscale: 0.0, outnorm: False, inputs: [deter, stoch], winit: normal, fan: avg, bins: 255, symlog_inputs: False}
+  # actor_opt: {opt: adam, lr: 3e-5, eps: 1e-5, clip: 100.0, wd: 0.0, warmup: 0, lateclip: 0.0}
+  # critic_opt: {opt: adam, lr: 3e-5, eps: 1e-5, clip: 100.0, wd: 0.0, warmup: 0, lateclip: 0.0}
+  # actor_dist_disc: onehot
+  # actor_dist_cont: normal
+  # actor_grad_disc: reinforce
+  # actor_grad_cont: backprop
+  # critic_type: vfunction
+  # imag_horizon: 15
+  # imag_unroll: False
+  # imag_cont: mean
+  # horizon: 333
+  # return_lambda: 0.95
+  # critic_slowreg: logprob
+  # slow_critic_update: 1
+  # slow_critic_fraction: 0.02
+  # slow_critic_target: False
+  # retnorm: {impl: perc_ema, decay: 0.99, max: 1.0, perclo: 5.0, perchi: 95.0}
+  # actent: 3e-4
+
   # World Model
   grad_heads: [decoder, reward, cont]
   rssm_type: rssm
-  rssm: {impl: softmax, deter: 4096, units: 1024, stoch: 32, classes: 32, act: silu, norm: layer, unimix: 0.01, unroll: False, action_clip: 1.0, bottleneck: -1, winit: normal, fan: avg, maskgit: {embed: 256, layers: 4, heads: 4, ffwdim: 256, steps: 4}}
-  early_rssm: {deter: 4096, units: 1024, stoch: 32, classes: 32, act: silu, norm: layer, unimix: 0.01, unroll: False, action_clip: 1.0, bottleneck: -1, winit: normal, fan: avg, prior_layers: 3}
-  token_rssm: {deter: 4096, units: 1024, stoch: 32, classes: 32, vocab: 32100, act: silu, norm: layer, unimix: 0.01, unroll: False, action_clip: 1.0, bottleneck: -1, winit: normal, fan: avg, prior_layers: 3}
-  encoder: {mlp_keys: '.*', cnn_keys: '.*', act: silu, norm: layer, mlp_layers: 5, mlp_units: 1024, cnn: resnet, cnn_depth: 96, cnn_blocks: 0, resize: stride, winit: normal, fan: avg}
-  decoder: {mlp_keys: '.*', cnn_keys: '.*', act: silu, norm: layer, mlp_layers: 5, mlp_units: 1024, cnn: resnet, cnn_depth: 96, cnn_blocks: 0, image_dist: mse, vector_dist: symlog_mse, inputs: [deter, stoch], resize: stride, winit: normal, fan: avg, outscale: 1.0, minres: 4, cnn_sigmoid: False}
-  reward_head: {layers: 5, units: 1024, act: silu, norm: layer, dist: symexp_twohot, outscale: 0.0, outnorm: False, inputs: [deter, stoch], winit: normal, fan: avg, bins: 255}
-  cont_head: {layers: 5, units: 1024, act: silu, norm: layer, dist: binary, outscale: 1.0, outnorm: False, inputs: [deter, stoch], winit: normal, fan: avg}
-  loss_scales: {image: 1.0, vector: 1.0, reward: 1.0, cont: 1.0, dyn: 0.5, rep: 0.1, actor: 1.0, critic: 1.0, slowreg: 1.0, token: 1.0, lm: 0.0}
-  rssm_loss: {free: 1.0}
-  model_opt: {opt: adam, lr: 1e-4, eps: 1e-8, clip: 1000.0, wd: 0.0, warmup: 0, lateclip: 0.0, frozen_keys: '^$'}
-  skip_cnn_training: False
-  skip_mlp_training: False
-  zero_data_keys: ['']
-  zero_cnn: False
-  zero_mlp: False
+  rssm: 
+    impl: softmax
+    deter: 512  # GRUユニット数 (Sサイズ)
+    units: 512  # 隠れユニット数 (Sサイズ)
+    stoch: 32
+    classes: 32
+    act: silu
+    norm: layer
+    unimix: 0.01
+    unroll: False
+    action_clip: 1.0
+    bottleneck: -1
+    winit: normal
+    fan: avg
+    maskgit: 
+      embed: 128  # Embed サイズは元サイズの半分に調整
+      layers: 2   # MLP層数 (Sサイズ)
+      heads: 4
+      ffwdim: 128 # フィードフォワード層の次元を縮小
+      steps: 4
+  early_rssm: 
+    deter: 512  # GRUユニット数 (Sサイズ)
+    units: 512  # 隠れユニット数 (Sサイズ)
+    stoch: 32
+    classes: 32
+    act: silu
+    norm: layer
+    unimix: 0.01
+    unroll: False
+    action_clip: 1.0
+    bottleneck: -1
+    winit: normal
+    fan: avg
+    prior_layers: 2  # 層数を削減
+  token_rssm: 
+    deter: 512  # GRUユニット数 (Sサイズ)
+    units: 512  # 隠れユニット数 (Sサイズ)
+    stoch: 32
+    classes: 32
+    vocab: 32100
+    act: silu
+    norm: layer
+    unimix: 0.01
+    unroll: False
+    action_clip: 1.0
+    bottleneck: -1
+    winit: normal
+    fan: avg
+    prior_layers: 2  # 層数を削減
 
-  # Actor Critic
-  actor: {layers: 5, units: 1024, act: silu, norm: layer, minstd: 0.1, maxstd: 1.0, outscale: 1.0, outnorm: False, unimix: 0.01, inputs: [deter, stoch], winit: normal, fan: avg, symlog_inputs: False}
-  critic: {layers: 5, units: 1024, act: silu, norm: layer, dist: symexp_twohot, outscale: 0.0, outnorm: False, inputs: [deter, stoch], winit: normal, fan: avg, bins: 255, symlog_inputs: False}
-  actor_opt: {opt: adam, lr: 3e-5, eps: 1e-5, clip: 100.0, wd: 0.0, warmup: 0, lateclip: 0.0}
-  critic_opt: {opt: adam, lr: 3e-5, eps: 1e-5, clip: 100.0, wd: 0.0, warmup: 0, lateclip: 0.0}
-  actor_dist_disc: onehot
-  actor_dist_cont: normal
-  actor_grad_disc: reinforce
-  actor_grad_cont: backprop
-  critic_type: vfunction
-  imag_horizon: 15
-  imag_unroll: False
-  imag_cont: mean
-  horizon: 333
-  return_lambda: 0.95
-  critic_slowreg: logprob
-  slow_critic_update: 1
-  slow_critic_fraction: 0.02
-  slow_critic_target: False
-  retnorm: {impl: perc_ema, decay: 0.99, max: 1.0, perclo: 5.0, perchi: 95.0}
-  actent: 3e-4
+  encoder: 
+    mlp_keys: '.*'
+    cnn_keys: '.*'
+    act: silu
+    norm: layer
+    mlp_layers: 2  # MLP層数 (Sサイズ)
+    mlp_units: 512 # 隠れユニット数 (Sサイズ)
+    cnn: resnet
+    cnn_depth: 32  # CNNの深さ (Sサイズ)
+    cnn_blocks: 0
+    resize: stride
+    winit: normal
+    fan: avg
+
+  decoder: 
+    mlp_keys: '.*'
+    cnn_keys: '.*'
+    act: silu
+    norm: layer
+    mlp_layers: 2  # MLP層数 (Sサイズ)
+    mlp_units: 512 # 隠れユニット数 (Sサイズ)
+    cnn: resnet
+    cnn_depth: 32  # CNNの深さ (Sサイズ)
+    cnn_blocks: 0
+    image_dist: mse
+    vector_dist: symlog_mse
+    inputs: [deter, stoch]
+    resize: stride
+    winit: normal
+    fan: avg
+    outscale: 1.0
+    minres: 4
+    cnn_sigmoid: False
+
+  reward_head: 
+    layers: 2  # MLP層数 (Sサイズ)
+    units: 512 # 隠れユニット数 (Sサイズ)
+    act: silu
+    norm: layer
+    dist: symexp_twohot
+    outscale: 0.0
+    outnorm: False
+    inputs: [deter, stoch]
+    winit: normal
+    fan: avg
+    bins: 255
+
+  cont_head: 
+    layers: 2  # MLP層数 (Sサイズ)
+    units: 512 # 隠れユニット数 (Sサイズ)
+    act: silu
+    norm: layer
+    dist: binary
+    outscale: 1.0
+    outnorm: False
+    inputs: [deter, stoch]
+    winit: normal
+    fan: avg
+
+  loss_scales: 
+    image: 1.0
+    vector: 1.0
+    reward: 1.0
+    cont: 1.0
+    dyn: 0.5
+    rep: 0.1
+    actor: 1.0
+    critic: 1.0
+    slowreg: 1.0
+    token: 1.0
+    lm: 0.0
+
+  rssm_loss: 
+    free: 1.0
+
+  model_opt: 
+    opt: adam
+    lr: 1e-4
+    eps: 1e-8
+    clip: 1000.0
+    wd: 0.0
+    warmup: 0
+    lateclip: 0.0
+    frozen_keys: '^$'
 
   # Exploration
   expl_rewards: {extr: 1.0, disag: 0.1}

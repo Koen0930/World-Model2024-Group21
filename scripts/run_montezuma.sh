@@ -16,7 +16,7 @@ export CUDA_VISIBLE_DEVICES=$device; python dynalang/train.py \
   --logdir /workspace/logdir/atari/${task}_${name} \
   --use_wandb False \
   --task gym_ALE/MontezumaRevenge-v5 \
-  --envs.amount 16 \
+  --envs.amount 4 \
   --dataset_excluded_keys info \
   --seed $seed \
   --decoder.image_dist mse \

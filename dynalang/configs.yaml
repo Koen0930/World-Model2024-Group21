@@ -122,11 +122,11 @@ defaults:
   # loss_scales: {image: 1.0, vector: 1.0, reward: 1.0, cont: 1.0, dyn: 0.5, rep: 0.1, actor: 1.0, critic: 1.0, slowreg: 1.0, token: 1.0, lm: 0.0}
   # rssm_loss: {free: 1.0}
   # model_opt: {opt: adam, lr: 1e-4, eps: 1e-8, clip: 1000.0, wd: 0.0, warmup: 0, lateclip: 0.0, frozen_keys: '^$'}
-  # skip_cnn_training: False
-  # skip_mlp_training: False
-  # zero_data_keys: ['']
-  # zero_cnn: False
-  # zero_mlp: False
+  skip_cnn_training: False
+  skip_mlp_training: False
+  zero_data_keys: ['']
+  zero_cnn: False
+  zero_mlp: False
 
   # # Actor Critic
   actor: {layers: 5, units: 1024, act: silu, norm: layer, minstd: 0.1, maxstd: 1.0, outscale: 1.0, outnorm: False, unimix: 0.01, inputs: [deter, stoch], winit: normal, fan: avg, symlog_inputs: False}
@@ -148,7 +148,7 @@ defaults:
   slow_critic_fraction: 0.02
   slow_critic_target: False
   retnorm: {impl: perc_ema, decay: 0.99, max: 1.0, perclo: 5.0, perchi: 95.0}
-  # actent: 3e-4
+  actent: 3e-4
 
   # World Model
   grad_heads: [decoder, reward, cont]

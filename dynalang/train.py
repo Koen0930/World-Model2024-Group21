@@ -298,7 +298,7 @@ def wrap_env(env, config):
 #    if space.dtype in (np.uint32, np.uint64):
 #      env = wrappers.OneHotObs(env, name)
   # 画像のリサイズ
-  env = wrappers.ResizeImage(env, size=(84, 84))
+  env = wrappers.ResizeImage(env, size=(64, 64))
 
   for name, space in env.act_space.items():
     if name == 'reset':

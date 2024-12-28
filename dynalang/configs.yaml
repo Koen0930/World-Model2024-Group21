@@ -129,25 +129,25 @@ defaults:
   # zero_mlp: False
 
   # # Actor Critic
-  # actor: {layers: 5, units: 1024, act: silu, norm: layer, minstd: 0.1, maxstd: 1.0, outscale: 1.0, outnorm: False, unimix: 0.01, inputs: [deter, stoch], winit: normal, fan: avg, symlog_inputs: False}
-  # critic: {layers: 5, units: 1024, act: silu, norm: layer, dist: symexp_twohot, outscale: 0.0, outnorm: False, inputs: [deter, stoch], winit: normal, fan: avg, bins: 255, symlog_inputs: False}
-  # actor_opt: {opt: adam, lr: 3e-5, eps: 1e-5, clip: 100.0, wd: 0.0, warmup: 0, lateclip: 0.0}
-  # critic_opt: {opt: adam, lr: 3e-5, eps: 1e-5, clip: 100.0, wd: 0.0, warmup: 0, lateclip: 0.0}
-  # actor_dist_disc: onehot
-  # actor_dist_cont: normal
-  # actor_grad_disc: reinforce
-  # actor_grad_cont: backprop
-  # critic_type: vfunction
-  # imag_horizon: 15
-  # imag_unroll: False
-  # imag_cont: mean
-  # horizon: 333
-  # return_lambda: 0.95
-  # critic_slowreg: logprob
-  # slow_critic_update: 1
-  # slow_critic_fraction: 0.02
-  # slow_critic_target: False
-  # retnorm: {impl: perc_ema, decay: 0.99, max: 1.0, perclo: 5.0, perchi: 95.0}
+  actor: {layers: 5, units: 1024, act: silu, norm: layer, minstd: 0.1, maxstd: 1.0, outscale: 1.0, outnorm: False, unimix: 0.01, inputs: [deter, stoch], winit: normal, fan: avg, symlog_inputs: False}
+  critic: {layers: 5, units: 1024, act: silu, norm: layer, dist: symexp_twohot, outscale: 0.0, outnorm: False, inputs: [deter, stoch], winit: normal, fan: avg, bins: 255, symlog_inputs: False}
+  actor_opt: {opt: adam, lr: 3e-5, eps: 1e-5, clip: 100.0, wd: 0.0, warmup: 0, lateclip: 0.0}
+  critic_opt: {opt: adam, lr: 3e-5, eps: 1e-5, clip: 100.0, wd: 0.0, warmup: 0, lateclip: 0.0}
+  actor_dist_disc: onehot
+  actor_dist_cont: normal
+  actor_grad_disc: reinforce
+  actor_grad_cont: backprop
+  critic_type: vfunction
+  imag_horizon: 15
+  imag_unroll: False
+  imag_cont: mean
+  horizon: 333
+  return_lambda: 0.95
+  critic_slowreg: logprob
+  slow_critic_update: 1
+  slow_critic_fraction: 0.02
+  slow_critic_target: False
+  retnorm: {impl: perc_ema, decay: 0.99, max: 1.0, perclo: 5.0, perchi: 95.0}
   # actent: 3e-4
 
   # World Model

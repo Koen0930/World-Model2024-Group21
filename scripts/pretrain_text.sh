@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 
-task=s2
+task=homegrid_task
 name=$1
 device=$2
 seed=$3
@@ -23,7 +23,7 @@ export CUDA_VISIBLE_DEVICES=$device; python dynalang/train.py \
   --logdir ~/logdir/textpt/$name \
   --eval_dir $eval_dir \
   --use_wandb True \
-  --task messenger_${task} \
+  --task ${task} \
   --dataset_excluded_keys info \
   --seed $seed \
   --decoder.image_dist binary \

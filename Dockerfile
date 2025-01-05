@@ -73,3 +73,6 @@ RUN chown -R 1000:root /World-Model2024-Group21 && chmod -R 775 /World-Model2024
 COPY requirements.txt /tmp/requirements.txt
 RUN pip install --upgrade pip
 RUN pip install -r /tmp/requirements.txt
+
+# シェルスクリプト起動時に conda 環境を自動で有効化する設定
+RUN echo "source activate dynalang" >> ~/.bashrc

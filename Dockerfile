@@ -39,13 +39,18 @@ SHELL ["conda", "run", "-n", "dynalang", "/bin/bash", "-c"]
 RUN pip3 install jax[cuda11_cudnn82] -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 ENV XLA_PYTHON_CLIENT_MEM_FRACTION 0.8
 
-# HomeGrid
-RUN pip install homegrid
+# Install Rust and Cargo
+RUN apt-get update && \
+    apt-get install -y cargo rustc && \
+    /opt/conda/bin/conda run -n dynalang /bin/bash -c "\
+      set -eux && \
+      pip install homegrid \
+    "
 
 # Messenger: Change `messenger-emma` to your local messenger-emma repo path (must be in the Docker build context).
-COPY messenger-emma /messenger-emma
-RUN pip install vgdl@git+https://github.com/ahjwang/py-vgdl
-RUN cd /messenger-emma; pip install -e .
+# COPY messenger-emma /messenger-emma
+# RUN pip install vgdl@git+https://github.com/ahjwang/py-vgdl
+# RUN cd /messenger-emma; pip install -e .
 
 # Uncomment if running VLN
 # COPY dynalang/env_vln.yml /environment.yml
@@ -63,7 +68,7 @@ RUN cd /messenger-emma; pip install -e .
 # ENV GOOGLE_CLOUD_BUCKET_NAME=your_bucket_name
 # ENV WANDB_API_KEY=your_wandb_key
 
-COPY dynalang /dynalang
-WORKDIR dynalang
-RUN chown -R 1000:root /dynalang && chmod -R 775 /dynalang
-RUN pip install -e /dynalang
+COPY . /World-Model2024-Group21
+WORKDIR World-Model2024-Group21
+RUN chown -R 1000:root /World-Model2024-Group21 && chmod -R 775 /World-Model2024-Group21
+RUN pip install -e /World-Model2024-Group21

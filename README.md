@@ -1,3 +1,31 @@
+# 世界モデル最終課題 グループ21
+
+## 実行方法
+
+### 1. Docker Imageのビルド
+
+以下のコマンドを実行して、Dockerイメージをビルドします。
+
+```bash
+docker build -f Dockerfile -t img .
+```
+
+### 2. コンテナの起動
+以下のコマンドを実行して、Dockerコンテナを起動します。
+
+```bash
+docker run -it --rm --gpus all  -v /home/ubuntu/World-Model2024-Group21:/World-Model2024-Group21  -v /home/ubuntu/logdir:/logdir img
+```
+
+### 3. 依存関係のインストール
+以下のコマンドを実行して、必要なライブラリをインストールします。
+
+```bash
+sh scripts/setup_env.sh
+```
+
+---
+
 # Learning to Model the World with Language
 
 ![Dynalang Overview](banner.gif)

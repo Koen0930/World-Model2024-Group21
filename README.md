@@ -1,3 +1,33 @@
+# 世界モデル最終課題 グループ21
+
+## 実行方法
+
+### 1. Docker Imageのビルド
+
+以下のコマンドを実行して、Dockerイメージをビルドします。
+
+```bash
+docker build -f Dockerfile -t img .
+```
+
+### 2. コンテナの起動
+以下のコマンドを実行して、Dockerコンテナを起動します。
+
+```bash
+docker run -it --rm --gpus all  -v /home/ubuntu/World-Model2024-Group21:/World-Model2024-Group21  -v /home/ubuntu/logdir:/logdir img
+```
+
+### 3. homegridの学習
+```bash
+sh scripts/run_homegrid.sh homegrid_task EXP_NAME GPU_IDS SEED
+```
+
+```bash
+sh scripts/run_homegrid.sh homegrid_task EXP_NAME GPU_IDS SEED
+```
+
+---
+
 # Learning to Model the World with Language
 
 ![Dynalang Overview](banner.gif)

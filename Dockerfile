@@ -6,11 +6,11 @@
 #
 # 2. Start training:
 # docker build -f Dockerfile -t img . && \
-# docker run -it --rm --gpus all -v ~/logdir:/logdir img \
+# docker run -it --rm --gpus all  -v /home/ubuntu/World-Model2024-Group21:/World-Model2024-Group21  -v /home/ubuntu/logdir:/logdir img
 #   sh scripts/run_messenger_s1.sh EXP_NAME GPU_IDS SEED
 
 # System
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
+FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/San_Francisco
 ENV PYTHONUNBUFFERED 1
@@ -36,16 +36,18 @@ RUN conda create -n dynalang python=3.8
 # Automatically use the conda env for any RUN commands
 SHELL ["conda", "run", "-n", "dynalang", "/bin/bash", "-c"]
 
-RUN pip3 install jax[cuda11_cudnn82] -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+RUN pip install jax[cuda12_cudnn86] -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+RUN pip install jaxlib[cuda12_cudnn86] -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 ENV XLA_PYTHON_CLIENT_MEM_FRACTION 0.8
 
-# HomeGrid
-RUN pip install homegrid
+# Install Rust and Cargo
+RUN apt-get update && \
+    apt-get install -y cargo rustc
 
 # Messenger: Change `messenger-emma` to your local messenger-emma repo path (must be in the Docker build context).
-COPY messenger-emma /messenger-emma
-RUN pip install vgdl@git+https://github.com/ahjwang/py-vgdl
-RUN cd /messenger-emma; pip install -e .
+# COPY messenger-emma /messenger-emma
+# RUN pip install vgdl@git+https://github.com/ahjwang/py-vgdl
+# RUN cd /messenger-emma; pip install -e .
 
 # Uncomment if running VLN
 # COPY dynalang/env_vln.yml /environment.yml
@@ -63,7 +65,14 @@ RUN cd /messenger-emma; pip install -e .
 # ENV GOOGLE_CLOUD_BUCKET_NAME=your_bucket_name
 # ENV WANDB_API_KEY=your_wandb_key
 
-COPY dynalang /dynalang
-WORKDIR dynalang
-RUN chown -R 1000:root /dynalang && chmod -R 775 /dynalang
-RUN pip install -e /dynalang
+COPY . /World-Model2024-Group21
+WORKDIR World-Model2024-Group21
+RUN chown -R 1000:root /World-Model2024-Group21 && chmod -R 775 /World-Model2024-Group21
+
+# requirements.txt をコピーして一括インストール
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r /tmp/requirements.txt
+
+# シェルスクリプト起動時に conda 環境を自動で有効化する設定
+RUN echo "source activate dynalang" >> ~/.bashrc

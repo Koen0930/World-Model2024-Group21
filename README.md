@@ -17,9 +17,14 @@ docker build -f Dockerfile -t img .
 docker run -it --rm --gpus all  -v /home/ubuntu/World-Model2024-Group21:/World-Model2024-Group21  -v /home/ubuntu/logdir:/logdir img
 ```
 
-### 3. 依存関係のインストール
+### 3.
 以下のコマンドを実行して、必要なライブラリをインストールします。
 
+```bash
+source /opt/conda/bin/activate dynalang
+```
+
+### 4. homegridの学習
 ```bash
 sh scripts/setup_env.sh
 ```

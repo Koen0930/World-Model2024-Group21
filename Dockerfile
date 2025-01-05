@@ -10,7 +10,7 @@
 #   sh scripts/run_messenger_s1.sh EXP_NAME GPU_IDS SEED
 
 # System
-FROM nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04
+FROM nvidia/cuda:12.1.1-cudnn8-devel-ubuntu22.04
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=America/San_Francisco
 ENV PYTHONUNBUFFERED 1
@@ -36,16 +36,13 @@ RUN conda create -n dynalang python=3.8
 # Automatically use the conda env for any RUN commands
 SHELL ["conda", "run", "-n", "dynalang", "/bin/bash", "-c"]
 
-RUN pip3 install jax[cuda11_cudnn82] -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+RUN pip install jax[cuda12_cudnn86] -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
+RUN pip install jaxlib[cuda12_cudnn86] -f https://storage.googleapis.com/jax-releases/jax_cuda_releases.html
 ENV XLA_PYTHON_CLIENT_MEM_FRACTION 0.8
 
 # Install Rust and Cargo
 RUN apt-get update && \
-    apt-get install -y cargo rustc && \
-    /opt/conda/bin/conda run -n dynalang /bin/bash -c "\
-      set -eux && \
-      pip install homegrid \
-    "
+    apt-get install -y cargo rustc
 
 # Messenger: Change `messenger-emma` to your local messenger-emma repo path (must be in the Docker build context).
 # COPY messenger-emma /messenger-emma
@@ -71,4 +68,8 @@ RUN apt-get update && \
 COPY . /World-Model2024-Group21
 WORKDIR World-Model2024-Group21
 RUN chown -R 1000:root /World-Model2024-Group21 && chmod -R 775 /World-Model2024-Group21
-RUN pip install -e /World-Model2024-Group21
+
+# requirements.txt をコピーして一括インストール
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r /tmp/requirements.txt

@@ -6,7 +6,7 @@
 #
 # 2. Start training:
 # docker build -f Dockerfile -t img . && \
-# docker run -it --rm --gpus all -v ~/logdir:/logdir img \
+# docker run -it --rm --gpus all  -v /home/ubuntu/World-Model2024-Group21:/World-Model2024-Group21  -v /home/ubuntu/logdir:/logdir img
 #   sh scripts/run_messenger_s1.sh EXP_NAME GPU_IDS SEED
 
 # System

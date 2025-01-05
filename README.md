@@ -17,16 +17,13 @@ docker build -f Dockerfile -t img .
 docker run -it --rm --gpus all  -v /home/ubuntu/World-Model2024-Group21:/World-Model2024-Group21  -v /home/ubuntu/logdir:/logdir img
 ```
 
-### 3.
-以下のコマンドを実行して、必要なライブラリをインストールします。
-
+### 3. homegridの学習
 ```bash
-source /opt/conda/bin/activate dynalang
+sh scripts/run_homegrid.sh homegrid_task EXP_NAME GPU_IDS SEED
 ```
 
-### 4. homegridの学習
 ```bash
-sh scripts/setup_env.sh
+sh scripts/run_homegrid.sh homegrid_task EXP_NAME GPU_IDS SEED
 ```
 
 ---

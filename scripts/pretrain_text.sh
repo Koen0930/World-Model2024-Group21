@@ -1,7 +1,7 @@
 #! /bin/bash
 #
 
-task=homegrid_task
+task=homegrid_dynamics
 name=$1
 device=$2
 seed=$3

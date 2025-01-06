@@ -12,7 +12,7 @@ shift
 
 export CUDA_VISIBLE_DEVICES=$device; python dynalang/train.py \
   --run.script train \
-  --logdir ~/logdir/homegrid/$name \
+  --logdir logdir/homegrid/$name \
   --use_wandb True \
   --task $task \
   --envs.amount 1 \

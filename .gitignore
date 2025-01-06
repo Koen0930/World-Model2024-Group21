@@ -21,3 +21,4 @@ data/
 VLN_CE/
 habitat_lab/
 .venv/
+logdir/

@@ -20,7 +20,7 @@ export CUDA_VISIBLE_DEVICES=$device; python dynalang/train.py \
   --run.save_every 1e6 \
   --replay_size 1e6 \
   --text_dataset $dataset \
-  --logdir ~/logdir/textpt/$name \
+  --logdir logdir/textpt/$name \
   --eval_dir $eval_dir \
   --use_wandb True \
   --task ${task} \

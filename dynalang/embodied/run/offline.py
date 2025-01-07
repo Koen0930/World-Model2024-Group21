@@ -97,5 +97,6 @@ def offline(agent, offline_ds, eval_replay, logger, args):
         # Pickle a batch for inspection.
 #        with open(logdir / f"batch.pkl", "wb") as f:
 #          pickle.dump(batch, f)
+  checkpoint.save()
   print('Pretraining done.')
   return

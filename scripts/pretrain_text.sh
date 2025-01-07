@@ -30,8 +30,8 @@ export CUDA_VISIBLE_DEVICES=$device; python dynalang/train.py \
   --encoder.mlp_keys token$ \
   --decoder.mlp_keys token$ \
   --decoder.vector_dist onehot \
-  --batch_size 64 \
-  --batch_length 128 \
+  --batch_size 32 \
+  --batch_length 32 \
   --run.pretrain_wm_only True \
   --loss_scales.cont 0 \
   --loss_scales.reward 0 \

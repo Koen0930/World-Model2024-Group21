@@ -16,7 +16,7 @@ shift
 
 export CUDA_VISIBLE_DEVICES=$device; python dynalang/train.py \
   --run.script offline-text \
-  --run.pretrain 1e8 \
+  --run.pretrain 1e5 \
   --run.save_every 1e6 \
   --replay_size 1e6 \
   --text_dataset $dataset \

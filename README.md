@@ -22,15 +22,6 @@ docker run -it --rm --gpus all  -v /home/ubuntu/World-Model2024-Group21:/World-M
 sh scripts/run_homegrid.sh homegrid_dynamics EXP_NAME GPU_IDS SEED
 ```
 
-```bash
-sh scripts/pretrain_text.sh EXP_NAME GPU_IDS SEED roneneldan/TinyStories /PATH/TO/EVAL/REPLAY/EPISODES
-sh scripts/pretrain_text.sh exp2 0 42 roneneldan/TinyStories /World-Model2024-Group21/logdir/homegrid/test1_42/episodes
-```
-
-```bash
-sh scripts/run_homegrid_pretrained.sh homegrid_dynamics EXP_NAME GPU_IDS SEED
-```
-
 ---
 
 # Learning to Model the World with Language

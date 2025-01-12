@@ -358,7 +358,7 @@ class JAXAgent(embodied.Agent):
     if self.single_device:
       return varibs
     if len(self.train_devices) > 1:
-      varibs = tree_map(lambda x: x[0].device_buffer, self.varibs)
+      varibs = tree_map(lambda x: x[0].addressable_data(0), self.varibs)
     if len(self.policy_devices) == 1:
       varibs = jax.device_put(varibs, self.policy_devices[0])
     else:

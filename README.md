@@ -19,11 +19,7 @@ docker run -it --rm --gpus all  -v /home/ubuntu/World-Model2024-Group21:/World-M
 
 ### 3. homegridの学習
 ```bash
-sh scripts/run_homegrid.sh homegrid_task EXP_NAME GPU_IDS SEED
-```
-
-```bash
-sh scripts/run_homegrid.sh homegrid_task EXP_NAME GPU_IDS SEED
+sh scripts/run_homegrid.sh homegrid_dynamics EXP_NAME GPU_IDS SEED
 ```
 
 ---

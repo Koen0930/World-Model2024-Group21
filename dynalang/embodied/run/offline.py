@@ -56,6 +56,10 @@ def offline(agent, offline_ds, eval_replay, logger, args):
   timer.wrap('checkpoint', checkpoint, ['save', 'load'])
   checkpoint.step = step
   checkpoint.agent = agent
+  # for two stage training
+  if args.from_checkpoint:
+#    shutil.copy(args.from_checkpoint, logdir / "init.ckpt")
+    checkpoint.load(args.from_checkpoint)
   checkpoint.load_or_save()
   should_save(step)
   print(f"Ckpt has step {checkpoint.step.value}")
@@ -97,5 +101,6 @@ def offline(agent, offline_ds, eval_replay, logger, args):
         # Pickle a batch for inspection.
 #        with open(logdir / f"batch.pkl", "wb") as f:
 #          pickle.dump(batch, f)
+  checkpoint.save()
   print('Pretraining done.')
   return

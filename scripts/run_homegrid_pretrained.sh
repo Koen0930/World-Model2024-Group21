@@ -23,4 +23,6 @@ export CUDA_VISIBLE_DEVICES=$device; python dynalang/train.py \
   --batch_size 16 \
   --batch_length 256 \
   --run.train_ratio 32 \
+  --load_wm_ckpt True \
+  --run.from_checkpoint /World-Model2024-Group21/logdir/textpt/exp2_42/checkpoint.pkl \
   "$@"
